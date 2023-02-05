@@ -42,3 +42,50 @@ func linkedListFromSlice(slc []int) LinkedList {
 	}
 	return ll
 }
+
+// O(1)
+func (l *LinkedList) insertNodeAtStart(val int) {
+	newNode := &Node{
+		data: val,
+		next: l.head,
+		prev: nil,
+	}
+	l.head.prev = newNode
+	l.head = newNode
+}
+
+// O(1)
+func (l *LinkedList) insertNodeByPtr(val int, node *Node) {
+	newNode := &Node{
+		data: val,
+		next: node,
+		prev: node.prev,
+	}
+	node.prev.next = newNode
+	node.prev = newNode
+}
+
+// O(1)
+func (l *LinkedList) deleteNodeByPtr(node *Node) {
+	node.next.prev = node.prev
+	node.prev.next = node.next
+}
+
+// O(1), adds cycle starting from tail so some node
+// Also possible to start from any node, but all nodes after are no longer part of the linked list
+func (l *LinkedList) addCycle(node *Node) {
+	l.tail.next = node
+}
+
+// O(n) since all nodes must be visited in the worst case scenario
+func (l *LinkedList) search(target int) *Node {
+	current := l.head
+	// last node's next pointer is nil
+	for current != nil {
+		if current.data == target {
+			return current
+		}
+		current = current.next
+	}
+	return nil
+}
