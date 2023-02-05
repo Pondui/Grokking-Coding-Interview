@@ -8,6 +8,12 @@ import (
 
 func main() {
 	fmt.Println(maxInSlidingWindowDeque(3, []int{5,6,3,-3,0,2,1,4,10,-2}))
+	fmt.Println(maxInSlidingWindowDeque(3, []int{1,2,3,4,5,6,7,8,9,10}))
+	fmt.Println(maxInSlidingWindowDeque(4, []int{3,3,3,3,3,3,3,3,3,3}))
+	fmt.Println(maxInSlidingWindowDeque(2, []int{10,6,9,-3,23,-1,34,56,67,-1,-4,-8,-2,9,10,34,67}))
+	fmt.Println(maxInSlidingWindowDeque(1, []int{4,5,6,1,2,3}))
+	fmt.Println(maxInSlidingWindowDeque(2, []int{9,5,3,1,6,3}))
+	fmt.Println(maxInSlidingWindowDeque(2, []int{1,2}))
 }
 
 // The idea here is not avoid calculating the max element in each window
@@ -30,7 +36,7 @@ func maxInSlidingWindowDeque(windowSize int, slc []int) []int {
 	var dq deque.Deque[data]
 
 	for i, val := range slc {
-		if dq.Len() > 0 && i - dq.Front().index > 2 {
+		if dq.Len() > 0 && i - dq.Front().index >= windowSize {
 			dq.PopFront()
 		}
 		for dq.Len() > 0 && dq.Back().value < val {
